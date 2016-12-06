@@ -4,9 +4,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 class Auth extends CI_Controller {
 
 	function __construct() {
-		parent::__construct();		
-		$this->load->helper(array('form','url'));
-		$this->load->library('form_validation');
+		parent::__construct();
 		$this->load->model('User_model');
 	}
 
@@ -16,7 +14,7 @@ class Auth extends CI_Controller {
 		    $data['username'] = $session_data['username'];
 		    $this->load->view('dashboard', $data);
 		} else {
-			$this->load->view('login_view');
+			$this->load->view('login');
 		}		
 	}
 
@@ -31,7 +29,7 @@ class Auth extends CI_Controller {
 		$this->form_validation->set_rules('password','Password','required');
 
 		if($this->form_validation->run() == FALSE) {
-			$this->load->view('login_view');
+			$this->load->view('login');
 		} else {
 			
 			if($num_account > 0) {
@@ -48,6 +46,16 @@ class Auth extends CI_Controller {
 				redirect(site_url());
 			}
 
+		}
+	}
+
+	function logout() {
+		$cek = $this->session->userdata('logged_in');
+		if(empty($cek)) {
+			redirect(site_url());
+		} else {
+			$this->session->sess_destroy();
+			redirect(site_url());
 		}
 	}
 
