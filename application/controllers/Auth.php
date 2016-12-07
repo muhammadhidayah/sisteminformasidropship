@@ -10,9 +10,13 @@ class Auth extends CI_Controller {
 
 	function index() {
 		if($this->session->userdata('logged_in')) {
-			$session_data = $this->session->userdata('logged_in');
-		    $data['username'] = $session_data['username'];
-		    $this->load->view('dashboard', $data);
+			if ($this->session->userdata('level') == 1) {
+				$data['username'] = $this->session->userdata('username');
+				$this->load->view('admin/dashboard',$data);
+			} else {
+				$data['username'] = $this->session->userdata('username');
+				$this->load->view('dropship/dashboard',$data);
+			}
 		} else {
 			$this->load->view('login');
 		}		
@@ -34,12 +38,17 @@ class Auth extends CI_Controller {
 			
 			if($num_account > 0) {
 
-				$array_items = array('id_user' => $temp_account->id_user, 
+				$array_items = array('id_level' => $temp_account->id_level, 
 									'username' => $temp_account->username,
 									'logged_in'=> TRUE);
 
 				$this->session->set_userdata($array_items);
-				redirect(site_url('dashboard'));
+
+				if ($this->session->userdata('id_level') == 1) {
+					redirect(site_url('auth/admin'));
+				} else {
+					redirect(site_url('auth/dropship'));
+				}
 			} else {
 				$this->session->set_flashdata('notification','Peringatan Username dan Password tidak cocok');
 
@@ -47,6 +56,16 @@ class Auth extends CI_Controller {
 			}
 
 		}
+	}
+
+	function admin() {
+		$data['username'] = $this->session->userdata('username');
+		$this->load->view('admin/dashboard',$data);
+	}
+
+	function dropship() {
+		$data['username'] = $this->session->userdata('username');
+		$this->load->view('dropship/dashboard',$data);
 	}
 
 	function logout() {
