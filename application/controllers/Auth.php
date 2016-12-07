@@ -10,7 +10,7 @@ class Auth extends CI_Controller {
 
 	function index() {
 		if($this->session->userdata('logged_in')) {
-			if ($this->session->userdata('level') == 1) {
+			if ($this->session->userdata('id_level') == 1) {
 				$data['username'] = $this->session->userdata('username');
 				$this->load->view('admin/dashboard',$data);
 			} else {
@@ -59,13 +59,21 @@ class Auth extends CI_Controller {
 	}
 
 	function admin() {
-		$data['username'] = $this->session->userdata('username');
-		$this->load->view('admin/dashboard',$data);
+		if($this->session->userdata('id_level') == 1) {
+			$data['username'] = $this->session->userdata('username');
+			$this->load->view('admin/dashboard',$data);
+		} else {
+			redirect(site_url());
+		}
 	}
 
 	function dropship() {
-		$data['username'] = $this->session->userdata('username');
-		$this->load->view('dropship/dashboard',$data);
+		if($this->session->userdata('id_level') == 2) {
+			$data['username'] = $this->session->userdata('username');
+			$this->load->view('dropship/dashboard',$data);
+		} else {
+			redirect(site_url());
+		}
 	}
 
 	function logout() {
