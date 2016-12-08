@@ -3,23 +3,20 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Auth extends CI_Controller {
 
-	function __construct() {
-		parent::__construct();
-		$this->load->model('User_model');
-	}
+	/*function __construct() {
+				
+	}*/
 
 	function index() {
 		if($this->session->userdata('logged_in')) {
 			if ($this->session->userdata('id_level') == 1) {
-				$data['username'] = $this->session->userdata('username');
-				$this->load->view('admin/dashboard',$data);
+				redirect(site_url('admin'));
 			} else {
-				$data['username'] = $this->session->userdata('username');
-				$this->load->view('dropship/dashboard',$data);
+				redirect(site_url('dropshipper'));
 			}
 		} else {
 			$this->load->view('login');
-		}		
+		}	
 	}
 
 	function login() {
@@ -45,9 +42,9 @@ class Auth extends CI_Controller {
 				$this->session->set_userdata($array_items);
 
 				if ($this->session->userdata('id_level') == 1) {
-					redirect(site_url('auth/admin'));
+					redirect(site_url('admin'));
 				} else {
-					redirect(site_url('auth/dropship'));
+					redirect(site_url('dropshipper'));
 				}
 			} else {
 				$this->session->set_flashdata('notification','Peringatan Username dan Password tidak cocok');
@@ -55,24 +52,6 @@ class Auth extends CI_Controller {
 				redirect(site_url());
 			}
 
-		}
-	}
-
-	function admin() {
-		if($this->session->userdata('id_level') == 1) {
-			$data['username'] = $this->session->userdata('username');
-			$this->load->view('admin/dashboard',$data);
-		} else {
-			redirect(site_url());
-		}
-	}
-
-	function dropship() {
-		if($this->session->userdata('id_level') == 2) {
-			$data['username'] = $this->session->userdata('username');
-			$this->load->view('dropship/dashboard',$data);
-		} else {
-			redirect(site_url());
 		}
 	}
 
