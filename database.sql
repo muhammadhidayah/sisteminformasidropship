@@ -14,13 +14,7 @@
 /*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
 /*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
-DROP Database IF EXISTS `db_dropshiper`;
-CREATE Database db_dropshiper;
-GO
 
-USE db_dropshiper;
-
-GO
 --
 -- Table structure for table `tbl_category`
 --
@@ -41,6 +35,7 @@ CREATE TABLE `tbl_category` (
 
 LOCK TABLES `tbl_category` WRITE;
 /*!40000 ALTER TABLE `tbl_category` DISABLE KEYS */;
+INSERT INTO `tbl_category` VALUES ('BTT','Blouse'),('HBB','Baju Lengan Pendek'),('KBP','Baju Lengan Panjang'),('SBB','Baju Batik Serambit');
 /*!40000 ALTER TABLE `tbl_category` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -61,7 +56,7 @@ CREATE TABLE `tbl_dropship` (
   PRIMARY KEY (`id_dropship`),
   KEY `id_user` (`id_user`),
   CONSTRAINT `tbl_dropship_ibfk_1` FOREIGN KEY (`id_user`) REFERENCES `tbl_user` (`id_user`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -70,6 +65,7 @@ CREATE TABLE `tbl_dropship` (
 
 LOCK TABLES `tbl_dropship` WRITE;
 /*!40000 ALTER TABLE `tbl_dropship` DISABLE KEYS */;
+INSERT INTO `tbl_dropship` VALUES (1,2,'Muhammad Hidayah','Jalan Mancasan Indah','081949162028','muhammad30hidayah696@gmail.com');
 /*!40000 ALTER TABLE `tbl_dropship` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -99,6 +95,7 @@ CREATE TABLE `tbl_item` (
 
 LOCK TABLES `tbl_item` WRITE;
 /*!40000 ALTER TABLE `tbl_item` DISABLE KEYS */;
+INSERT INTO `tbl_item` VALUES ('BTT326','BTT','BTT326',12,50000.00,'BT 326.png'),('BTT327','BTT','BTT327',12,50000.00,'BT 327.png');
 /*!40000 ALTER TABLE `tbl_item` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -218,4 +215,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2016-12-07 22:37:46
+-- Dump completed on 2016-12-11  1:34:53
