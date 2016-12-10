@@ -37,6 +37,7 @@ class Auth extends CI_Controller {
 
 				$array_items = array('id_level' => $temp_account->id_level, 
 									'username' => $temp_account->username,
+									'id_user' => $temp_account->id_user,
 									'logged_in'=> TRUE);
 
 				$this->session->set_userdata($array_items);

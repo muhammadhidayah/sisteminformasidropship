@@ -29,7 +29,7 @@ DROP TABLE IF EXISTS `tbl_category`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `tbl_category` (
-  `id_category` char(6) NOT NULL,
+  `id_category` varchar(3) NOT NULL,
   `explanation` varchar(30) NOT NULL,
   PRIMARY KEY (`id_category`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -82,7 +82,7 @@ DROP TABLE IF EXISTS `tbl_item`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `tbl_item` (
   `id_item` char(6) NOT NULL,
-  `id_category` varchar(4) DEFAULT NULL,
+  `id_category` varchar(3) DEFAULT NULL,
   `name_item` varchar(10) NOT NULL,
   `stock` int(11) NOT NULL,
   `selling_price` decimal(15,2) NOT NULL,
