@@ -45,7 +45,7 @@
 							<svg class="glyph stroked male-user"><use xlink:href="#stroked-male-user"></use></svg>
 						</div>
 						<div class="col-sm-9 col-lg-7 widget-right">
-							<div class="large"><?php echo $jumlah;?></div>
+							<div class="large"><?php echo $jumlahdrop;?></div>
 							<div class="text-muted">Dropshiper</div>
 						</div>
 					</div>
@@ -127,8 +127,8 @@
 									'<td>Rp.'+data[i].selling_price+'</td>'+
 									'<td><center><img src="<?php echo base_url('upload/');?>'+data[i].foto+'" height="40" width="30" id="image"></center></td>'+
 									'<td><center>'+
-										'<a href="javascript:;" class="btn btn-success">Edit</a>&nbsp&nbsp&nbsp&nbsp'+
-										'<a href="javascript:;" class="btn btn-danger">Hapus</a>'+
+										'<a href="javascript:;" class="btn btn-success btn-sm"><span class="glyphicon glyphicon-pencil"></span>&nbsp&nbspEdit</a>&nbsp&nbsp&nbsp&nbsp'+
+										'<a href="javascript:;" class="btn btn-danger btn-sm"><span class="glyphicon glyphicon-trash"></span>&nbsp&nbspHapus</a>'+
 									'</center></td>'+
 								'</tr>';	
 

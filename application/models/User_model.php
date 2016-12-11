@@ -1,4 +1,5 @@
 <?php
+defined('BASEPATH') OR exit('No direct script access allowed');
 
 class User_model extends CI_Model {
 
@@ -11,33 +12,67 @@ class User_model extends CI_Model {
 
 	}
 
-	function getAllUser() {
-		$query = $this->db->get('tbl_dropship');
+	
+	public function showAllUser() {
+		$this->db->select('*');
+		$this->db->from('tbl_user');
+		$this->db->join('tbl_jenis_user','tbl_user.id_level = tbl_jenis_user.id_level');
+		$query = $this->db->get();
 		if($query->num_rows() > 0) {
 			return $query->result();
 		} else {
-			# code...
-			return false;
+			return FALSE;
 		}
 	}
 
-	function getCountUser(){
+	function getCountUser() {
 		$this->db->select('count(id_user) as jumlah');
 		$this->db->from('tbl_user');
-
 		return $this->db->get();
 	}
 
-	public function getUserById($id) {
-		$this->db->select('*');
-		$this->db->from('tbl_user');
-		$this->db->join('tbl_dropship','tbl_user.id_user = tbl_dropship.id_user');
-		$this->db->where('tbl_user.id_user',$id);
-		$query = $this->db->get();
-		return $query;
+	public function addUser() {
+		$data = array(
+			"id_level" => $this->input->post('pilihJenisUser'),
+			"username" => $this->input->post('txtUsername'),
+			"password" => md5($this->input->post('txtPassword'))
+		);
+		$this->db->insert('tbl_user',$data);
+		if($this->db->affected_rows() > 0) {
+			return true;
+		} else
+			return false;
+	}
+
+	public function getUserById() {
+		$id = $this->input->get('id');
+		$this->db->where('id_user',$id);
+		$result = $this->db->get('tbl_user');
+		if($result->num_rows() > 0) {
+			return $result->row();
+		} else
+			return false;
+	}
+
+	public function updateUser() {
+		$id = $this->input->post('txtId');
+		$data = array(
+			"id_user" => $this->input->post('txtId'),
+			"username" => $this->input->post('txtUsername'),
+			"password" => md5($this->input->post('txtPassword'))
+		);
+		$this->db->where('id_user', $id);
+		$this->db->update('tbl_user', $data);
+
+		if($this->db->affected_rows() > 0) {
+			return true;
+		} else {
+			return false;
+		}
 
 	}
 
 }
 
-?>
+/* End of file User_model.php */
+/* Location: ./application/models/User_model.php */
