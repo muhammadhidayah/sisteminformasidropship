@@ -6,11 +6,12 @@ class Admin extends CI_Controller {
 	function __construct() {
 		parent::__construct();
 		$this->load->model('Produk_m', 'p_m');
+		$this->load->model('Muser_model', 'M_m');
 	}
 
 	function index() {
 		if($this->session->userdata('id_level') == 1) {
-			$data['sidemenu'] = $this->load->view('layout/sidemenu',array(),true);
+			$data['sidemenu'] = $this->load->view('layout/sidemenuadmin',array(),true);
 			$data['jumlah'] = $this->User_model->getCountUser()->row()->jumlah;
 			$data['header'] = $this->load->view('layout/header',array("username" => $this->session->userdata('username')),true);
 			$data['menu'] = $this->load->view('layout/menu',array("username" => $this->session->userdata('username')),true);
@@ -27,7 +28,24 @@ class Admin extends CI_Controller {
 		echo json_encode($query);
 	}
 
+	function manajemen_user() {
+		if($this->session->userdata('id_level') == 1) {
+			$data['sidemenu'] = $this->load->view('layout/sidemenuadmin',array(),true);
+			//$data['jumlah'] = $this->User_model->getCountUser()->row()->jumlah;
+			$data['header'] = $this->load->view('layout/header',array("username" => $this->session->userdata('username')),true);
+			$data['menu'] = $this->load->view('layout/menu',array("username" => $this->session->userdata('username')),true);
+			//$data['jumpro'] = count($this->M_m->showAllUser());
+			$data['footer'] = $this->load->view('layout/footer',array(),true);
+			$this->load->view('admin/man_user', $data);
+		} else {
+			redirect(base_url());
+		}
+	}
 
+	public function tampiluser() {
+		$query = $this->M_m->showAllUser();
+		echo json_encode($query);
+	}
 }
 
 ?>
