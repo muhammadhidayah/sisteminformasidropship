@@ -48,6 +48,9 @@ class Admin extends CI_Controller {
 	}
 
 	function tambahUser() {
+		$this->form_validation->set_rules('txtUsername', 'Username', 'trim|required');
+		$this->form_validation->set_rules('txtPassword', 'Password', 'trim|required');
+		$this->form_validation->set_rules('pilihJenisUser', 'PilihJenisUser', 'required');
 		$result = $this->User_model->addUser();
 		$msg['success'] = false;
 		$msg['type'] = "";
@@ -75,6 +78,18 @@ class Admin extends CI_Controller {
 
 		echo json_encode($msg);
 	}
+
+	function deleteUser(){
+		
+		$result = $this->User_model->deleteUser();
+		$msg['success'] = false;
+		if($result) {
+			$msg['success'] = true;
+		}
+
+		echo json_encode($msg);
+	}
+	
 }
 
 ?>

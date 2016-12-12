@@ -156,7 +156,7 @@
 							}
 							tampiluser();
 						} else {
-							alert('Tidak Bisa Add OM');
+							alert('Tidak Bisa Mengupdate User');
 						}
 					},
 					error: function() {
@@ -190,6 +190,29 @@
 			
 		});
 
+		$('#showdata').on('click','.item-hapus', function(){
+			var id = $(this).attr('data');
+			var status = confirm('Apakah anda yakin ingin menghapus?');
+			if(status) {
+				$.ajax({
+					url: '<?php echo site_url('admin/deleteUser'); ?>',
+					method: 'post',
+					dataType: 'json',
+					data: {id: id},
+					success: function(response) {
+						if(response.success) {
+							$('.alert').addClass('bg-danger').html('<svg class="glyph stroked trash"><use xlink:href="#stroked-trash"></use></svg> User berhasil di Delete').fadeIn().delay(4000).fadeOut('slow');
+							tampiluser();
+						}
+					},
+					error: function() {
+						alert('Tidak bisa menghapus');
+					}
+				});
+			}
+
+		});
+
 		function tampiluser(){
 			$.ajax({
 				type: 'ajax',
@@ -208,7 +231,7 @@
 									'<td>'+data[i].last_login+'</td>'+
 									'<td><center>'+
 										'<a href="javascript:;" class="btn btn-success btn-sm item-edit" data="'+data[i].id_user+'"><span class="glyphicon glyphicon-pencil"></span>&nbsp&nbspEdit</a>&nbsp&nbsp&nbsp&nbsp'+
-										'<a href="javascript:;" class="btn btn-danger btn-sm"><span class="glyphicon glyphicon-trash"></span>&nbsp&nbspHapus</a>&nbsp&nbsp&nbsp&nbsp'+
+										'<a href="javascript:;" class="btn btn-danger btn-sm item-hapus" data="'+data[i].id_user+'"><span class="glyphicon glyphicon-trash"></span>&nbsp&nbspHapus</a>&nbsp&nbsp&nbsp&nbsp'+
 										'<a href="javascript:;" class="btn btn-info">Lihat detail Dropshiper</a>'
 									'</center></td>'+
 								'</tr>';	
