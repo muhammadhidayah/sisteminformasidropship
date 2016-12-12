@@ -15,6 +15,7 @@
 		<div class="row">
 			<ol class="breadcrumb">
 				<li><a href="<?php echo site_url(); ?>"><svg class="glyph stroked home"><use xlink:href="#stroked-home"></use></svg></a></li>
+				<li class="active">Manajemen User</li>
 			</ol>
 		</div><!--/.row-->
 		<div class="row">
@@ -32,14 +33,14 @@
 					<button type="button" class="btn btn-success btn-sm" id="btnTambahUser">
 			          <span class="glyphicon glyphicon-plus"></span> Tambah User
 			        </button>
-						<table class="table table-bordered" style="margin-top: 20px;">
+						<table class="table table-hover" style="margin-top: 20px;">
 						    <thead>
 						    <tr>
-						        <th data-field="idl" data-sortable="true">Jenis User</th>
-						        <th data-field="name"  data-sortable="true">Username</th>
-						        <th data-field="pass" data-sortable="true">Password</th>
-						        <th data-field="lastlogin" data-sortable="true">Login Terakhir</th>
-						        <th data-field="option" data-sortable="true">Options</th>
+						        <th data-field="idl" data-sortable="true"><center>Jenis User</center></th>
+						        <th data-field="name"  data-sortable="true"><center>Username</center></th>
+						        <th data-field="pass" data-sortable="true"><center>Password</center></th>
+						        <th data-field="lastlogin" data-sortable="true"><center>Login Terakhir</center></th>
+						        <th data-field="option" data-sortable="true"><center>Options</th>
 						    </tr>
 						    </thead>
 						    <tbody id="showdata">
@@ -225,10 +226,10 @@
 					var i;
 					for(i = 0; i < data.length; i++ ) {
 						hasil += '<tr>' +
-									'<td>'+data[i].jenis_user+'</td>'+
-									'<td>'+data[i].username+'</td>'+
-									'<td>'+data[i].password+'</td>'+
-									'<td>'+data[i].last_login+'</td>'+
+									'<td><center>'+data[i].jenis_user+'</center></td>'+
+									'<td><center>'+data[i].username+'</center></td>'+
+									'<td><center>'+data[i].password+'</center></td>'+
+									'<td><center>'+data[i].last_login+'</center></td>'+
 									'<td><center>'+
 										'<a href="javascript:;" class="btn btn-success btn-sm item-edit" data="'+data[i].id_user+'"><span class="glyphicon glyphicon-pencil"></span>&nbsp&nbspEdit</a>&nbsp&nbsp&nbsp&nbsp'+
 										'<a href="javascript:;" class="btn btn-danger btn-sm item-hapus" data="'+data[i].id_user+'"><span class="glyphicon glyphicon-trash"></span>&nbsp&nbspHapus</a>&nbsp&nbsp&nbsp&nbsp'+

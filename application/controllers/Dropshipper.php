@@ -5,6 +5,7 @@ class Dropshipper extends CI_Controller {
 
 	function __construct() {
 		parent::__construct();
+		$this->load->model('Produk_model', 'p_m');
 		$this->load->model('Dropshiper_model','d_m');
 		if($this->session->userdata('id_level') != 2) {
 			redirect(site_url());
@@ -19,6 +20,20 @@ class Dropshipper extends CI_Controller {
 		$data['menu'] = $this->load->view('layout/menu',array("username" => $this->session->userdata('username')),true);
 		$data['footer'] = $this->load->view('layout/footer',array(),true);
 		$this->load->view('dropship/index', $data);
+	}
+
+	function katalog() {
+		
+		$data['sidemenu'] = $this->load->view('layout/sidemenu',array(),true);
+		$data['header'] = $this->load->view('layout/header',array("username" => $this->session->userdata('username')),true);
+		$data['menu'] = $this->load->view('layout/menu',array("username" => $this->session->userdata('username')),true);
+		$data['footer'] = $this->load->view('layout/footer',array(),true);
+		$this->load->view('dropship/katalog', $data);
+	}
+	
+	public function tampilproduk() {
+		$query = $this->p_m->showAllProduct();
+		echo json_encode($query);
 	}
 
 }

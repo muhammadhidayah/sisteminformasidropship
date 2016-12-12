@@ -34,10 +34,8 @@ class Admin extends CI_Controller {
 	function manajemen_user() {
 		
 		$data['sidemenu'] = $this->load->view('layout/sidemenuadmin',array(),true);
-		//$data['jumlah'] = $this->User_model->getCountUser()->row()->jumlah;
 		$data['header'] = $this->load->view('layout/header',array("username" => $this->session->userdata('username')),true);
 			$data['menu'] = $this->load->view('layout/menu',array("username" => $this->session->userdata('username')),true);
-			//$data['jumpro'] = count($this->M_m->showAllUser());
 		$data['footer'] = $this->load->view('layout/footer',array(),true);
 		$this->load->view('admin/man_user', $data);
 	}

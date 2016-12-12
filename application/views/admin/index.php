@@ -15,6 +15,7 @@
 		<div class="row">
 			<ol class="breadcrumb">
 				<li><a href="<?php echo site_url(); ?>"><svg class="glyph stroked home"><use xlink:href="#stroked-home"></use></svg></a></li>
+				<li class="active">Dashboard</li>
 			</ol>
 		</div><!--/.row-->
 		
@@ -84,14 +85,14 @@
 				<div class="panel panel-default">
 					<div class="panel-heading">Daftar Produk</div>
 					<div class="panel-body">
-						<table class="table table-bordered">
+						<table class="table table-hover">
 						    <thead>
 						    <tr>
-						        <th data-field="id" data-sortable="true">Item Name</th>
-						        <th data-field="name"  data-sortable="true">Item Stock</th>
-						        <th data-field="price" data-sortable="true">Item Price</th>
-						        <th data-field="price" data-sortable="true">Item Photo</th>
-						        <th data-field="price" data-sortable="true">Options</th>
+						        <th data-field="id" data-sortable="true"><center>Item Name</center></th>
+						        <th data-field="name"  data-sortable="true"><center>Item Stock</center></th>
+						        <th data-field="price" data-sortable="true"><center>Item Price</center></th>
+						        <th data-field="price" data-sortable="true"><center>Item Photo</center></th>
+						        <th data-field="price" data-sortable="true"><center>Options</center></th>
 						    </tr>
 						    </thead>
 						    <tbody id="showdata">
@@ -122,9 +123,9 @@
 					var i;
 					for(i = 0; i < data.length; i++ ) {
 						hasil += '<tr>' +
-									'<td>'+data[i].name_item+'</td>'+
-									'<td>'+data[i].stock+'</td>'+
-									'<td>Rp.'+data[i].selling_price+'</td>'+
+									'<td><center>'+data[i].name_item+'</center></td>'+
+									'<td><center>'+data[i].stock+'</center></td>'+
+									'<td><center>Rp.'+data[i].selling_price+'</center></td>'+
 									'<td><center><img src="<?php echo base_url('upload/');?>'+data[i].foto+'" height="40" width="30" id="image"></center></td>'+
 									'<td><center>'+
 										'<a href="javascript:;" class="btn btn-success btn-sm"><span class="glyphicon glyphicon-pencil"></span>&nbsp&nbspEdit</a>&nbsp&nbsp&nbsp&nbsp'+
