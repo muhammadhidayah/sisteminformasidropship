@@ -8,10 +8,12 @@
 <link href="<?php echo base_url();?>dashboard/css/bootstrap.min.css" rel="stylesheet">
 <link href="<?php echo base_url();?>dashboard/css/datepicker3.css" rel="stylesheet">
 <link href="<?php echo base_url();?>dashboard/css/styles.css" rel="stylesheet">
+<link href="<?php echo base_url();?>css/bootstrap-table.css" rel="stylesheet">
 
 <!--Icons-->
 <script src="<?php echo base_url();?>dashboard/js/lumino.glyphs.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+<script src="<?php echo base_url();?>js/bootstrap-table.js"></script>
 
 <!--[if lt IE 9]>
 <script src="js/html5shiv.js"></script>

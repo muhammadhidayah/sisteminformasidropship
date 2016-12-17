@@ -77,7 +77,7 @@
 				    <div class="form-group">
 				   		<label class="control-label col-sm-4">Jenis User:</label>
 				   		<div class="col-sm-8">
-					    	<select name="pilihJenisUser" multiple>
+					    	<select name="pilihJenisUser" class="multiple">
 					    		<option value="1">Admin</option>
 					    		<option value="2">Dropshiper</option>
 					    	</select>
@@ -232,8 +232,8 @@
 									'<td><center>'+data[i].last_login+'</center></td>'+
 									'<td><center>'+
 										'<a href="javascript:;" class="btn btn-success btn-sm item-edit" data="'+data[i].id_user+'"><span class="glyphicon glyphicon-pencil"></span>&nbsp&nbspEdit</a>&nbsp&nbsp&nbsp&nbsp'+
-										'<a href="javascript:;" class="btn btn-danger btn-sm item-hapus" data="'+data[i].id_user+'"><span class="glyphicon glyphicon-trash"></span>&nbsp&nbspHapus</a>&nbsp&nbsp&nbsp&nbsp'+
-										'<a href="javascript:;" class="btn btn-info">Lihat detail Dropshiper</a>'
+										'<a href="javascript:;" class="btn btn-danger btn-sm item-hapus" data="'+data[i].id_user+'"><span class="glyphicon glyphicon-trash"></span>&nbsp&nbspHapus</a>&nbsp&nbsp&nbsp&nbsp' +
+										'<a href="javascript:;" class="btn btn-info" id="detail-dropship">Lihat detail Dropshiper</a>'
 									'</center></td>'+
 								'</tr>';	
 

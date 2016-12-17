@@ -85,19 +85,16 @@
 				<div class="panel panel-default">
 					<div class="panel-heading">Daftar Produk</div>
 					<div class="panel-body">
-						<table class="table table-hover">
+						<table data-toggle="table" id="data" data-url="<?php echo site_url('admin/tampilProdukDataTables');?>" data-show-refresh="true" data-show-toggle="false" data-show-columns="true" data-search="false" data-select-item-name="toolbar1" data-pagination="true" data-sort-name="name" data-sort-order="desc">
 						    <thead>
 						    <tr>
-						        <th data-field="id" data-sortable="true"><center>Item Name</center></th>
-						        <th data-field="name"  data-sortable="true"><center>Item Stock</center></th>
-						        <th data-field="price" data-sortable="true"><center>Item Price</center></th>
-						        <th data-field="price" data-sortable="true"><center>Item Photo</center></th>
-						        <th data-field="price" data-sortable="true"><center>Options</center></th>
+						        <th data-field="name_item" data-sortable="true"><center>Item Name</center></th>
+						        <th data-field="stock"  data-sortable="true"><center>Item Stock</center></th>
+						        <th data-field="selling_price" data-sortable="true"><center>Item Price</center></th>
+						        <th data-field="foto" data-sortable="true"><center>Item Photo</center></th>
+						        <th data-field="option" data-sortable="true"><center>Options</center></th>
 						    </tr>
 						    </thead>
-						    <tbody id="showdata">
-						    	
-						    </tbody>
 						</table>
 					</div>
 				</div>
@@ -106,44 +103,28 @@
 
 </div>	<!--/.main-->
 <!-- END CONTENT -->
-<script type="text/javascript">
-	$(function(){
-		
-		tampilproduk();
+<!-- <script type="text/javascript">
+	var table;
 
-		function tampilproduk(){
-			$.ajax({
-				type: 'ajax',
-				url: '<?php echo site_url();?>/admin/tampilproduk',
-				type: 'POST',
-				dataType: 'json',
-				async: false,
-				success: function(data){
-					var hasil = '';
-					var i;
-					for(i = 0; i < data.length; i++ ) {
-						hasil += '<tr>' +
-									'<td><center>'+data[i].name_item+'</center></td>'+
-									'<td><center>'+data[i].stock+'</center></td>'+
-									'<td><center>Rp.'+data[i].selling_price+'</center></td>'+
-									'<td><center><img src="<?php echo base_url('upload/');?>'+data[i].foto+'" height="40" width="30" id="image"></center></td>'+
-									'<td><center>'+
-										'<a href="javascript:;" class="btn btn-success btn-sm"><span class="glyphicon glyphicon-pencil"></span>&nbsp&nbspEdit</a>&nbsp&nbsp&nbsp&nbsp'+
-										'<a href="javascript:;" class="btn btn-danger btn-sm"><span class="glyphicon glyphicon-trash"></span>&nbsp&nbspHapus</a>'+
-									'</center></td>'+
-								'</tr>';	
+	$(document).ready(function(){
 
-					}
-					$('#showdata').html(hasil);
+		table = $('#data').DataTable({
+			"processing": true;
+			"serverside": true;
+			"order": [],
+			"ajax": {
+				"url": "<?php// echo site_url('admin/tampilProdukDataTables');?>",
+				"type": "POST"
+			},
+			"columnDefs": [{
+				"targets": [0],
+				"orderable": false,
 				},
-				error: function(){
-					alert('Tidak Bisa Mengambil Data');
-				}
-		});
-		}
-		
+			],
+		})
+
 	});
-</script>
-<!-- FOOTER -->
+</script> -->
+<!-- FOOTER -->	
 <?php echo $footer;?>
 <!-- END FOOTER -->

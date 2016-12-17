@@ -31,6 +31,22 @@ class Admin extends CI_Controller {
 		echo json_encode($query);
 	}
 
+	function tampilProdukDataTables() {
+		$list = $this->p_m->showAllProduct();
+		$data = array();
+		foreach ($list as $produk) {
+			$row = array();
+			$row['name_item'] = $produk->name_item;
+			$row['stock'] = $produk->stock;
+			$row['selling_price'] = 'Rp. '.$produk->selling_price;
+			$row['foto'] = '<center><a href="'.base_url('upload/'.$produk->foto).'" target="_blank"><img src="'.base_url('upload/'.$produk->foto).'" class="img-responsive" width="40" height="50" /></a></center>';
+			$row['option'] = 
+
+			$data[] = $row;
+		}
+		echo json_encode($data);
+	}
+
 	function manajemen_user() {
 		
 		$data['sidemenu'] = $this->load->view('layout/sidemenuadmin',array(),true);

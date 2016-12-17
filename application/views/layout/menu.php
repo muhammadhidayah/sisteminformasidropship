@@ -9,7 +9,7 @@
 			</button>
 			<a class="navbar-brand" href="#"><span>Sistem Infromasi</span> Dropshipper</a>
 			<ul class="user-menu">
-				<li class="dropdown pull-right">
+				<li class="dropdown">
 					<a href="#" class="dropdown-toggle" data-toggle="dropdown"><svg class="glyph stroked male-user"><use xlink:href="#stroked-male-user"></use></svg><?php echo $username;?><span class="caret"></span></a>
 					<ul class="dropdown-menu" role="menu">
 						<li><a href="#"><svg class="glyph stroked male-user"><use xlink:href="#stroked-male-user"></use></svg> Profile</a></li>

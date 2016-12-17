@@ -25,6 +25,13 @@ SET time_zone = "+00:00";
 --
 -- Table structure for table `tbl_category`
 --
+CREATE Database db_dropshiper;
+
+GO
+
+USE db_dropshiper;
+
+GO
 
 DROP TABLE IF EXISTS `tbl_category`;
 CREATE TABLE `tbl_category` (
@@ -158,18 +165,18 @@ CREATE TABLE `tbl_user` (
   `id_level` int(11) NOT NULL,
   `username` varchar(15) NOT NULL,
   `password` varchar(50) NOT NULL,
-  `last_login` date DEFAULT NULL
+  `last_login` datetime DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `tbl_user`
 --
 
-INSERT INTO `tbl_user` VALUES(1, 1, 'admin', '21232f297a57a5a743894a0e4a801fc3', '2016-12-07');
-INSERT INTO `tbl_user` VALUES(2, 2, 'user', 'ee11cbb19052e40b07aac0ca060c23ee', '2016-12-07');
-INSERT INTO `tbl_user` VALUES(3, 2, 'samuel', 'd8ae5776067290c4712fa454006c8ec6', '2016-12-12');
-INSERT INTO `tbl_user` VALUES(4, 2, 'agus', 'fdf169558242ee051cca1479770ebac3', '2016-12-12');
-INSERT INTO `tbl_user` VALUES(5, 2, 'andi', 'ce0e5bf55e4f71749eade7a8b95c4e46', '2016-12-12');
+INSERT INTO `tbl_user` VALUES(1, 1, 'admin', '21232f297a57a5a743894a0e4a801fc3', NOW());
+INSERT INTO `tbl_user` VALUES(2, 2, 'user', 'ee11cbb19052e40b07aac0ca060c23ee', NOW());
+INSERT INTO `tbl_user` VALUES(3, 2, 'samuel', 'd8ae5776067290c4712fa454006c8ec6', NOW());
+INSERT INTO `tbl_user` VALUES(4, 2, 'agus', 'fdf169558242ee051cca1479770ebac3', NOW());
+INSERT INTO `tbl_user` VALUES(5, 2, 'andi', 'ce0e5bf55e4f71749eade7a8b95c4e46', NOW());
 
 --
 -- Indexes for dumped tables

@@ -41,6 +41,7 @@ class Auth extends CI_Controller {
 									'logged_in'=> TRUE);
 
 				$this->session->set_userdata($array_items);
+				$this->User_model->updateUserLogin($array_items['id_user']);
 
 				if ($this->session->userdata('id_level') == 1) {
 					redirect(site_url('admin'));
@@ -54,6 +55,12 @@ class Auth extends CI_Controller {
 			}
 
 		}
+	}
+
+	function test() {
+		$this->db->select('fnCreateIdPurchase() as ID');
+		$query = $this->db->get()->row();
+		echo $query->ID;
 	}
 
 	function logout() {

@@ -8,8 +8,8 @@ class User_model extends CI_Model {
 		$this->db->from('tbl_user');
 		$this->db->where('username', $username);
 		$this->db->where('password', md5($password));
+		
 		return $this->db->get();
-
 	}
 
 	
@@ -69,6 +69,17 @@ class User_model extends CI_Model {
 		} else {
 			return false;
 		}
+
+	}
+
+	function updateUserLogin($id_user) {
+		$this->db->select('NOW() as now');
+		$result = $this->db->get()->row()->now;
+		$data = array(
+			"last_login" => $result
+		);
+		$this->db->where('id_user', $id_user);
+		$this->db->update('tbl_user',$data);
 
 	}
 
