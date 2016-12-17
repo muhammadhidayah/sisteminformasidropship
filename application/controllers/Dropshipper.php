@@ -61,6 +61,7 @@ class Dropshipper extends CI_Controller {
 		$this->load->model('Cart_model');
 		$is_processed = $this->Cart_model->order();
 		if($is_processed) {
+			$this->cart->destroy();
 			echo "success";
 		} else
 			echo "failed";

@@ -1,34 +1,7 @@
-CREATE DATABASE IF NOT EXISTS `db_dropshiper`;
-USE `db_dropshiper`;
-
-<<<<<<< HEAD
-SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
-SET time_zone = "+00:00";
-
-
-/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
-/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
-/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!40101 SET NAMES utf8mb4 */;
-
---
--- Database: `db_dropshiper`
---
-
--- --------------------------------------------------------
-
---
--- Table structure for table `tbl_category`
---
 CREATE Database db_dropshiper;
-
 GO
-
 USE db_dropshiper;
-
 GO
-=======
->>>>>>> 89f97dd6b5beca88c970276876d2d7bb502e2340
 
 DROP TABLE IF EXISTS `tbl_category`;
 CREATE TABLE `tbl_category` (
@@ -127,26 +100,6 @@ INSERT INTO `tbl_jenis_user` VALUES(1, 'admin');
 INSERT INTO `tbl_jenis_user` VALUES(2, 'user');
 
 
-INSERT INTO `tbl_user` VALUES(1, 1, 'admin', '21232f297a57a5a743894a0e4a801fc3', '2016-12-07 00:00:00');
-INSERT INTO `tbl_user` VALUES(2, 2, 'user', 'ee11cbb19052e40b07aac0ca060c23ee', '2016-12-07 00:00:00');
-INSERT INTO `tbl_user` VALUES(3, 2, 'samuel', 'd8ae5776067290c4712fa454006c8ec6', '2016-12-12 00:00:00');
-INSERT INTO `tbl_user` VALUES(4, 2, 'agus', 'fdf169558242ee051cca1479770ebac3', '2016-12-12 00:00:00');
-INSERT INTO `tbl_user` VALUES(5, 2, 'andi', 'ce0e5bf55e4f71749eade7a8b95c4e46', '2016-12-12 00:00:00');
-
-
-<<<<<<< HEAD
-DROP TABLE IF EXISTS `tbl_user`;
-CREATE TABLE `tbl_user` (
-  `id_user` int(11) NOT NULL,
-  `id_level` int(11) NOT NULL,
-  `username` varchar(15) NOT NULL,
-  `password` varchar(50) NOT NULL,
-  `last_login` datetime DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Dumping data for table `tbl_user`
---
 
 INSERT INTO `tbl_user` VALUES(1, 1, 'admin', '21232f297a57a5a743894a0e4a801fc3', NOW());
 INSERT INTO `tbl_user` VALUES(2, 2, 'user', 'ee11cbb19052e40b07aac0ca060c23ee', NOW());
@@ -154,105 +107,18 @@ INSERT INTO `tbl_user` VALUES(3, 2, 'samuel', 'd8ae5776067290c4712fa454006c8ec6'
 INSERT INTO `tbl_user` VALUES(4, 2, 'agus', 'fdf169558242ee051cca1479770ebac3', NOW());
 INSERT INTO `tbl_user` VALUES(5, 2, 'andi', 'ce0e5bf55e4f71749eade7a8b95c4e46', NOW());
 
---
--- Indexes for dumped tables
---
 
---
--- Indexes for table `tbl_category`
---
-ALTER TABLE `tbl_category`
-  ADD PRIMARY KEY (`id_category`);
-
---
--- Indexes for table `tbl_dropship`
---
-ALTER TABLE `tbl_dropship`
-  ADD PRIMARY KEY (`id_dropship`),
-  ADD KEY `id_user` (`id_user`);
-
---
--- Indexes for table `tbl_item`
---
-ALTER TABLE `tbl_item`
-  ADD PRIMARY KEY (`id_item`),
-  ADD KEY `id_category` (`id_category`);
-
---
--- Indexes for table `tbl_jenis_user`
---
-ALTER TABLE `tbl_jenis_user`
-  ADD PRIMARY KEY (`id_level`);
-
---
--- Indexes for table `tbl_purchase`
---
-ALTER TABLE `tbl_purchase`
-  ADD PRIMARY KEY (`id_purchase`),
-  ADD KEY `id_dropship` (`id_dropship`);
-
---
--- Indexes for table `tbl_purchasesitem`
---
-ALTER TABLE `tbl_purchasesitem`
-  ADD KEY `id_purchase` (`id_purchase`),
-  ADD KEY `id_item` (`id_item`);
-
---
--- Indexes for table `tbl_user`
---
-ALTER TABLE `tbl_user`
-  ADD PRIMARY KEY (`id_user`),
-  ADD KEY `id_level` (`id_level`);
-
---
--- AUTO_INCREMENT for dumped tables
---
-
---
--- AUTO_INCREMENT for table `tbl_dropship`
---
 ALTER TABLE `tbl_dropship`
   MODIFY `id_dropship` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
---
--- AUTO_INCREMENT for table `tbl_user`
---
+
 ALTER TABLE `tbl_user`
   MODIFY `id_user` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
---
--- Constraints for dumped tables
---
 
---
--- Constraints for table `tbl_dropship`
---
-ALTER TABLE `tbl_dropship`
-  ADD CONSTRAINT `tbl_dropship_ibfk_1` FOREIGN KEY (`id_user`) REFERENCES `tbl_user` (`id_user`);
 
---
--- Constraints for table `tbl_item`
---
-ALTER TABLE `tbl_item`
-  ADD CONSTRAINT `tbl_item_ibfk_1` FOREIGN KEY (`id_category`) REFERENCES `tbl_category` (`id_category`);
-
---
--- Constraints for table `tbl_purchase`
---
-ALTER TABLE `tbl_purchase`
-  ADD CONSTRAINT `tbl_purchase_ibfk_1` FOREIGN KEY (`id_dropship`) REFERENCES `tbl_dropship` (`id_dropship`);
-
---
--- Constraints for table `tbl_purchasesitem`
---
-ALTER TABLE `tbl_purchasesitem`
-  ADD CONSTRAINT `tbl_purchasesitem_ibfk_1` FOREIGN KEY (`id_purchase`) REFERENCES `tbl_purchase` (`id_purchase`),
-  ADD CONSTRAINT `tbl_purchasesitem_ibfk_2` FOREIGN KEY (`id_item`) REFERENCES `tbl_item` (`id_item`);
-=======
 INSERT INTO `tbl_dropship` VALUES(1, 2, 'Muhammad Hidayah', 'Jalan Mancasan Indah', '081949162028', 'muhammad30hidayah696@gmail.com', 'Antari Batik');
 INSERT INTO `tbl_dropship` VALUES(2, 3, 'Samuel Cahya', 'Jl. Ki Hajar Dewantara No. 128 Bandung', '081234567812', 'samuel@yayaya.com', 'SamCollections');
 INSERT INTO `tbl_dropship` VALUES(3, 4, 'agus tok', 'Jln. Pahlawan, Semarang', '087745613464', 'agus@gimail.com', 'AAboutique');
 INSERT INTO `tbl_dropship` VALUES(4, 5, 'Andi Nyata', 'Tambaksari, Surabaya', '08123467864', 'andi@andi.com', 'andishop');
->>>>>>> 89f97dd6b5beca88c970276876d2d7bb502e2340
 
 
 INSERT INTO `tbl_purchase_status` VALUES('001', 'dikonfirmasi');
