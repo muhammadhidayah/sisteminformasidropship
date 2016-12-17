@@ -67,10 +67,11 @@ CREATE TABLE `tbl_purchase` (
 
 DROP TABLE IF EXISTS `tbl_purchasesitem`;
 CREATE TABLE `tbl_purchasesitem` (
-  `id_purchase` char(14) NOT NULL, FOREIGN KEY fk_prchseitem_purchase(`id_purchase`) REFERENCES tbl_purchase(`id_purchase`), 
-  `id_item` varchar(6) NOT NULL, FOREIGN KEY fk_prchseitem_item(`id_item`) REFERENCES tbl_item(`id_item`), 
+  `id_purchase` char(14) NOT NULL, FOREIGN KEY fk_prchseitem_purchase(`id_purchase`) REFERENCES tbl_purchase(`id_purchase`) ON UPDATE CASCADE ON DELETE NO ACTION, 
+  `id_item` varchar(6) NOT NULL, FOREIGN KEY fk_prchseitem_item(`id_item`) REFERENCES tbl_item(`id_item`) ON UPDATE CASCADE ON DELETE NO ACTION,
   `amount` int(11) NOT NULL,
-  `selling_price` decimal(15,2) NOT NULL
+  `selling_price` decimal(15,2) NOT NULL,
+  PRIMARY KEY (id_purchase, id_item)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 
@@ -113,3 +114,25 @@ INSERT INTO `tbl_dropship` VALUES(4, 5, 'Andi Nyata', 'Tambaksari, Surabaya', '0
 
 INSERT INTO `tbl_purchase_status` VALUES('001', 'dikonfirmasi');
 INSERT INTO `tbl_purchase_status` VALUES('002', 'belum dikonfirmasi');
+
+
+DELIMITER $$
+CREATE FUNCTION fnCreateIdPurchase()
+RETURNS char(14)
+BEGIN
+DECLARE tgl_purchase char(8);
+DECLARE tgl_purchase_temp char(8);
+DECLARE id_purc_temp varchar(5);
+DECLARE id_purc char(14);
+SELECT max(substring(id_purchase,1,8)) INTO tgl_purchase FROM tbl_purchase;
+SELECT CURRENT_DATE()+0 INTO tgl_purchase_temp;
+
+IF tgl_purchase is null THEN 
+    SET id_purc = CONCAT(tgl_purchase_temp,"-00001");
+ELSE
+    SELECT LPAD((max(substring(id_purchase,10))+1),5,'0') INTO id_purc_temp FROM tbl_purchase;
+    SET id_purc = CONCAT(tgl_purchase_temp,'-',id_purc_temp);
+END IF;
+RETURN id_purc;
+END $$
+DELIMITER ;
