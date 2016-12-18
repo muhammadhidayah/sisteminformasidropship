@@ -145,3 +145,42 @@ END IF;
 RETURN id_purc;
 END $$
 DELIMITER ;
+
+
+DELIMITER $$
+CREATE TRIGGER TgInsertPI
+AFTER INSERT ON tbl_purchasesitem
+FOR EACH ROW
+BEGIN
+UPDATE tbl_item i
+SET i.stock=i.stock-NEW.amount WHERE i.id_item=NEW.id_item;
+END;
+$$
+DELIMITER ;
+
+
+DELIMITER $$
+CREATE TRIGGER TgDeletePI
+AFTER DELETE ON tbl_purchasesitem
+FOR EACH ROW
+BEGIN
+UPDATE tbl_item i 
+SET i.stock=i.stock+OLD.amount WHERE i.id_item=OLD.id_item;
+END;
+$$
+DELIMITER ;
+
+
+DELIMITER $$
+CREATE TRIGGER TgUpdatePI
+AFTER UPDATE ON tbl_purchasesitem
+FOR EACH ROW
+BEGIN
+UPDATE tbl_item i 
+SET i.stock=i.stock+OLD.amount WHERE i.id_item=OLD.id_item;
+UPDATE tbl_item i
+SET i.stock=i.stock-NEW.amount WHERE i.id_item=NEW.id_item;
+END;
+$$
+DELIMITER ;
+
