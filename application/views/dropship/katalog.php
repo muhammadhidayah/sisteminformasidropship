@@ -95,8 +95,65 @@
       	<center>
       		<button type="buton" class="btn btn-danger" id="clear-cart">Clear Cart</button>
 		    <button type="button" class="btn btn-primary" data-dismiss="modal">Continue Shopping</button>
-		    <?php echo anchor('dropshipper/order', 'Check Out', 'class="btn btn-success"'); ?>
+		    <button type="button" class="btn btn-success" data-dismiss="modal" id="checkout">Check Out</button>
         </center>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+
+<!-- Modal Untuk Alamat Tujuan-->
+<div class="modal fade" tabindex="-1" role="dialog" id="alamatTujuan">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title">Modal title</h4>
+      </div>
+      <div class="modal-body">
+        <form class="form-horizontal" action="" method="POST" id="myFormTujuan">
+			<div class="form-group">
+		    	<label for="inputnama" class="col-sm-2 control-label">Nama</label>
+		    	<div class="col-sm-10">
+		    		<input type="text" class="form-control" id="txtNama" name="txtNama" placeholder="Nama">
+		    	</div>
+		  	</div>
+		  	<div class="form-group">
+		    	<label for="inputalamat" class="col-sm-2 control-label">Alamat</label>
+		    	<div class="col-sm-10">
+		    		<input type="text" class="form-control" id="txtAlamat" name="txtAlamat" placeholder="Alamat">
+		    	</div>
+		  	</div>
+		  	<div class="form-group">
+		    	<label for="inputprovinsi" class="col-sm-2 control-label">Provinsi</label>
+		    	<div class="col-sm-10">
+		    		<input type="text" class="form-control" id="txtProvinsi" name="txtProvinsi" placeholder="Provinsi">
+		    	</div>
+		  	</div>
+		  	<div class="form-group">
+		    	<label for="inputkabupaten" class="col-sm-2 control-label">Kabupaten</label>
+		    	<div class="col-sm-10">
+		    		<input type="text" class="form-control" id="txtKabupaten" name="txtKabupaten" placeholder="Kabupaten">
+		    	</div>
+		  	</div>
+		  	<div class="form-group">
+		    	<label for="inputkecamatan" class="col-sm-2 control-label">Kecamatan</label>
+		    	<div class="col-sm-10">
+		    		<input type="text" class="form-control" id="txtKecamatan" name="txtKecamatan" placeholder="Kecamatan">
+		    	</div>
+		  	</div>
+		  	<div class="form-group">
+		    	<label for="inputnohp" class="col-sm-2 control-label">No HP</label>
+		    	<div class="col-sm-10">
+		    		<input type="text" class="form-control" id="txtNohp" name="txtNohp" placeholder="No Hp">
+		    	</div>
+		  	</div>
+		</form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-success" id="btnOrder">Order</button>
       </div>
     </div><!-- /.modal-content -->
   </div><!-- /.modal-dialog -->
@@ -124,6 +181,102 @@
 				}
 			});
 			
+		});
+
+		$("#checkout").click(function() {
+			<?php if($this->cart->total() == 0) { ?>
+				alert('Mohon berbelanja terlebih dahulu');
+			<?php } else { ?>
+				$("#inMyBasket").modal('hide');
+				$("#alamatTujuan").modal('show');
+				$("#alamatTujuan").find('.modal-title').html('Alamat Tujuan');
+				$("#myFormTujuan").attr('action', '<?php echo site_url('dropshipper/order'); ?>');
+			<?php } ?>
+		});
+
+		$("#btnOrder").click(function(){
+			var data = $('#myFormTujuan').serialize();
+			var url = $('#myFormTujuan').attr('action');
+
+			var nama = $('input[name=txtNama]');
+			var alamat = $('input[name=txtAlamat]');
+			var provinsi = $('input[name=txtProvinsi]');
+			var kabupaten = $('input[name=txtKabupaten]');
+			var kecamatan = $('input[name=txtKecamatan]');
+			var nohp = $('input[name=txtNohp]');
+			var result = '';
+
+			if(nama.val() == '') {
+				nama.parent().parent().addClass('has-error');
+			} else {
+				nama.parent().parent().removeClass('has-error');
+				result += '1';
+			}
+
+			if(alamat.val() == '') {
+				alamat.parent().parent().addClass('has-error');
+			} else {
+				alamat.parent().parent().removeClass('has-error');
+				result += '2';
+			}
+
+			if(provinsi.val() == '') {
+				provinsi.parent().parent().addClass('has-error');
+			} else {
+				provinsi.parent().parent().removeClass('has-error');
+				result += '3';
+			}
+
+			if(kabupaten.val() == '') {
+				kabupaten.parent().parent().addClass('has-error');
+			} else {
+				kabupaten.parent().parent().removeClass('has-error');
+				result += '4';
+			}
+
+			if(kecamatan.val() == '') {
+				kecamatan.parent().parent().addClass('has-error');
+			} else {
+				kecamatan.parent().parent().removeClass('has-error');
+				result += '5';
+			}
+
+			if(nohp.val() == '') {
+				nohp.parent().parent().addClass('has-error');
+			} else {
+				nohp.parent().parent().removeClass('has-error');
+				result += '6'
+			}
+
+			if(result == '123456') {
+				$.ajax({
+					url: url,
+					type: 'POST',
+					dataType: 'json',
+					data: data,
+					success: function(response) {
+						if(response.success) {
+							alert('berhasil');
+							location.reload();
+						}
+					},
+					error: function() {
+						alert('Tidak Berhasil');
+					}
+				})
+				.done(function() {
+					console.log("success");
+				})
+				.fail(function() {
+					console.log("error");
+				})
+				.always(function() {
+					console.log("complete");
+				});
+				
+			}
+
+
 		});
 
 		$("#showdata").on("click",".btn-beli", function(){

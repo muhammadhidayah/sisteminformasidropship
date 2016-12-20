@@ -60,11 +60,14 @@ class Dropshipper extends CI_Controller {
 	function order() {
 		$this->load->model('Cart_model');
 		$is_processed = $this->Cart_model->order();
+		$msg['success'] = false;
+		
 		if($is_processed) {
 			$this->cart->destroy();
-			echo "success";
-		} else
-			echo "failed";
+			$msg['success'] = true;
+		}
+
+		echo json_encode($msg);
 	}
 
 	function emptyBasket() {

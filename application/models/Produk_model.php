@@ -24,6 +24,35 @@ class Produk_model extends CI_Model {
 		return $query;
 	}
 
+	public function getCategory() {
+		$query = $this->db->get('tbl_category');
+		return $query;
+	}
+
+	public function addCategory() {
+		$data = array( 
+					"id_category" => $this->input->post('txtIdCategory'),
+					"explanation" => $this->input->post('txtCategory')
+				);
+		$this->db->insert('tbl_category', $data);
+
+		if($this->db->affected_rows() > 0) {
+			return true;
+		} else
+			return false;
+	}
+
+	public function deleteCategory() {
+		$id = $this->input->post('id');
+		$this->db->where('id_category', $id);
+		$this->db->delete('tbl_category');
+
+		if($this->db->affected_rows() > 0) {
+			return true;
+		} else
+			return false;
+	}
+
 	/* Untuk Datatables Server side, silahkan kalau kalian ingin menggunakan datatables. silahkan cari digoogle tutorial selanjutnya. Codingnya udah tak buatin
 	private function _get_datatables_query() {
 		$this->db->from($this->table);

@@ -87,6 +87,7 @@ class User_model extends CI_Model {
 		$id = $this->input->post('id');
 		$this->db->where('id_user', $id);
 		$this->db->delete('tbl_user');
+		
 		if($this->db->affected_rows() > 0) {
 			return true;
 		} else {

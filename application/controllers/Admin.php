@@ -15,7 +15,7 @@ class Admin extends CI_Controller {
 
 	function index() {
 
-		$data['sidemenu'] = $this->load->view('layout/sidemenuadmin',array(),true);
+		$data['sidemenu'] = $this->load->view('layout/sidemenu',array(),true);
 		$data['jumlah'] = $this->User_model->getCountUser()->row()->jumlah;
 		$data['jumlahdrop'] = $this->d_m->getAllUser()->num_rows();
 		$data['header'] = $this->load->view('layout/header',array("username" => $this->session->userdata('username')),true);
@@ -40,7 +40,7 @@ class Admin extends CI_Controller {
 			$row['stock'] = $produk->stock;
 			$row['selling_price'] = 'Rp. '.$produk->selling_price;
 			$row['foto'] = '<center><a href="'.base_url('upload/'.$produk->foto).'" target="_blank"><img src="'.base_url('upload/'.$produk->foto).'" class="img-responsive" width="40" height="50" /></a></center>';
-			$row['option'] = 
+			$row['option'] = '<a href="javascript:;" class="btn btn-primary btn-sm btn-edit" data="'. $produk->id_item.'"><span class="glyphicon glyphicon-shopping-cart"></span>beli</a>&nbsp&nbsp&nbsp&nbsp <a href="javascript:;'.$produk->id_item.'" class="btn btn-success btn-sm btn-delete"><span class="glyphicon glyphicon-download-alt"></span> Download foto</a>';
 
 			$data[] = $row;
 		}
@@ -49,12 +49,63 @@ class Admin extends CI_Controller {
 
 	function manajemen_user() {
 		
-		$data['sidemenu'] = $this->load->view('layout/sidemenuadmin',array(),true);
+		$data['sidemenu'] = $this->load->view('layout/sidemenu',array(),true);
 		$data['header'] = $this->load->view('layout/header',array("username" => $this->session->userdata('username')),true);
 			$data['menu'] = $this->load->view('layout/menu',array("username" => $this->session->userdata('username')),true);
 		$data['footer'] = $this->load->view('layout/footer',array(),true);
 		$this->load->view('admin/man_user', $data);
 	}
+
+	//Function Untuk Kategory
+
+	function category() {
+		$data['sidemenu'] = $this->load->view('layout/sidemenu',array(),true);
+		$data['header'] = $this->load->view('layout/header',array("username" => $this->session->userdata('username')),true);
+			$data['menu'] = $this->load->view('layout/menu',array("username" => $this->session->userdata('username')),true);
+		$data['footer'] = $this->load->view('layout/footer',array(),true);
+		$this->load->view('admin/category', $data);
+	}
+
+	function showAllCategory() {
+		$result = $this->p_m->getCategory()->result();
+		$data = array();
+		foreach ($result as $rows) {
+			$row = array();
+			$row['id_category'] = $rows->id_category;
+			$row['explanation'] = $rows->explanation;
+			$row['option'] = '<center><a href="javascript:;" class="btn btn-warning btn-sm btn-beli" data="'. $rows->id_category.'"><span class="glyphicon glyphicon-pencil"></span>  Edit</a>&nbsp&nbsp&nbsp&nbsp <a href="javascript:;"data='.$rows->id_category.' class="btn btn-danger btn-sm category-delete"><span class="glyphicon glyphicon-trash"></span> Delete foto</a></center>';
+
+			$data[] = $row;
+		}
+		echo json_encode($data);
+	}
+
+	function addCategory() {
+		$this->form_validation->set_rules('txtIdCategory', 'IDCategory', 'trim|required');
+		$this->form_validation->set_rules('txtCategory', 'Category', 'trim|required');
+
+		$result = $this->p_m->addCategory();
+		$msg['success'] = false;
+		if($result) {
+			$msg['success'] = true;
+		}
+
+		echo json_encode($msg);
+	}
+
+	function deleteCategory() {
+		$result = $this->p_m->deleteCategory();
+		$msg['success'] = false;
+
+		if($result) {
+			$msg['success'] = true;
+		}
+
+		echo json_encode($msg);
+	}
+
+
+	//End Function Kategori
 
 	public function tampiluser() {
 		$query = $this->User_model->showAllUser();

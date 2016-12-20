@@ -14,6 +14,7 @@
 <script src="<?php echo base_url();?>dashboard/js/lumino.glyphs.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 <script src="<?php echo base_url();?>js/bootstrap-table.js"></script>
+<script src="<?php echo base_url();?>js/custom.js" type="text/javascript"></script>
 
 <!--[if lt IE 9]>
 <script src="js/html5shiv.js"></script>

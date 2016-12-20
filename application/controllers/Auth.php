@@ -58,9 +58,7 @@ class Auth extends CI_Controller {
 	}
 
 	function test() {
-		$this->db->select('fnCreateIdPurchase() as ID');
-		$query = $this->db->get()->row();
-		echo $query->ID;
+		$this->db->select('count()');
 	}
 
 	function logout() {
