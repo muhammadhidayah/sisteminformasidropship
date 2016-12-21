@@ -26,6 +26,7 @@ class Admin extends CI_Controller {
 		
 	}
 
+	//Function Product
 	public function tampilproduk() {
 		$query = $this->p_m->showAllProduct();
 		echo json_encode($query);
@@ -40,20 +41,44 @@ class Admin extends CI_Controller {
 			$row['stock'] = $produk->stock;
 			$row['selling_price'] = 'Rp. '.$produk->selling_price;
 			$row['foto'] = '<center><a href="'.base_url('upload/'.$produk->foto).'" target="_blank"><img src="'.base_url('upload/'.$produk->foto).'" class="img-responsive" width="40" height="50" /></a></center>';
-			$row['option'] = '<a href="javascript:;" class="btn btn-primary btn-sm btn-edit" data="'. $produk->id_item.'"><span class="glyphicon glyphicon-shopping-cart"></span>beli</a>&nbsp&nbsp&nbsp&nbsp <a href="javascript:;'.$produk->id_item.'" class="btn btn-success btn-sm btn-delete"><span class="glyphicon glyphicon-download-alt"></span> Download foto</a>';
+			$row['option'] = '<center><a href="javascript:;" class="btn btn-warning btn-sm btn-edit" data="'. $produk->id_item.'"><span class="glyphicon glyphicon-pencil"></span>  Edit</a>&nbsp&nbsp&nbsp&nbsp <a href="javascript:;" class="btn btn-danger btn-sm btn-delete" data="'.$produk->id_item.'"><span class="glyphicon glyphicon-trash"></span> Delete foto</a></center>';
 
 			$data[] = $row;
 		}
 		echo json_encode($data);
 	}
 
-	function manajemen_user() {
+	function getItemById() {
+		$id = $this->input->get('id');
+		$result = $this->p_m->getProductById($id);
 		
-		$data['sidemenu'] = $this->load->view('layout/sidemenu',array(),true);
-		$data['header'] = $this->load->view('layout/header',array("username" => $this->session->userdata('username')),true);
-			$data['menu'] = $this->load->view('layout/menu',array("username" => $this->session->userdata('username')),true);
-		$data['footer'] = $this->load->view('layout/footer',array(),true);
-		$this->load->view('admin/man_user', $data);
+		echo json_encode($result->row());
+	}
+
+	function addProduct() {
+
+	}
+
+	function editProduct() {
+		$result = $this->p_m->editItem();
+		$msg['success'] = false;
+
+		if($result) {
+			$msg['success'] = true;
+		}
+
+		echo json_encode($msg);
+	}
+
+	function deleteProduct() {
+		$result = $this->p_m->deleteItem();
+		$msg['success'] = false;
+
+		if($result) {
+			$msg['success'] = true;
+		}
+
+		echo json_encode($msg);
 	}
 
 	//Function Untuk Kategory
@@ -106,6 +131,17 @@ class Admin extends CI_Controller {
 
 
 	//End Function Kategori
+
+	//Function USER
+
+	function manajemen_user() {
+		
+		$data['sidemenu'] = $this->load->view('layout/sidemenu',array(),true);
+		$data['header'] = $this->load->view('layout/header',array("username" => $this->session->userdata('username')),true);
+			$data['menu'] = $this->load->view('layout/menu',array("username" => $this->session->userdata('username')),true);
+		$data['footer'] = $this->load->view('layout/footer',array(),true);
+		$this->load->view('admin/man_user', $data);
+	}
 
 	public function tampiluser() {
 		$query = $this->User_model->showAllUser();

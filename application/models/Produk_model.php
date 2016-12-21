@@ -53,6 +53,35 @@ class Produk_model extends CI_Model {
 			return false;
 	}
 
+	public function editItem() {
+		$id = $this->input->post('txtId');
+		$data = array(
+				'id_item'	=> $this->input->post('txtId'),
+				'id_category'	=> $this->input->post('optioCategory'),
+				'name_item'		=> $this->input->post('txtNama'),
+				'stock'			=> $this->input->post('txtStock'),
+				'selling_price'	=> $this->input->post('txtprice'),
+				'foto'			=> $this->input->post('txtfoto')
+			);
+		$this->db->where('id_item', $id);
+		$this->db->update('tbl_item', $data);
+
+		if($this->db->affected_rows() > 0) {
+			return true;
+		} else
+			return false;
+	}
+	public function deleteItem() {
+		$id = $this->input->post('id');
+		$this->db->where('id_item', $id);
+		$this->db->delete('tbl_item');
+
+		if($this->db->affected_rows() > 0) {
+			return true;
+		} else
+			return false;
+	}
+
 	/* Untuk Datatables Server side, silahkan kalau kalian ingin menggunakan datatables. silahkan cari digoogle tutorial selanjutnya. Codingnya udah tak buatin
 	private function _get_datatables_query() {
 		$this->db->from($this->table);
