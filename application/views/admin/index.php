@@ -102,29 +102,173 @@
 		</div>
 
 </div>	<!--/.main-->
+
+<!-- Modal Untuk Edit Item Produk-->
+<div class="modal fade" tabindex="-1" role="dialog" id="editProduct">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title">Modal title</h4>
+      </div>
+      <div class="modal-body">
+        <form class="form-horizontal" action="" method="POST" id="myFormEditItem">
+			<div class="form-group">
+				<input type="hidden" id="txtId" name="txtId">
+				<input type="hidden" id="txtfoto" name="txtfoto">
+		    	<label for="inputnama" class="col-sm-3 control-label">Nama Item</label>
+		    	<div class="col-sm-9">
+		    		<input type="text" class="form-control" id="txtNama" name="txtNama">
+		    	</div>
+		  	</div>
+		  	<div class="form-group">
+		    	<label for="inputnama" class="col-sm-3 control-label">Stock Item</label>
+		    	<div class="col-sm-9">
+		    		<input type="text" class="form-control" id="txtStock" name="txtStock">
+		    	</div>
+		  	</div>
+		  	<div class="form-group">
+		    	<label for="inputnama" class="col-sm-3 control-label">Harga Item</label>
+		    	<div class="col-sm-9">
+		    		<input type="text" class="form-control" id="txtprice" name="txtprice">
+		    	</div>
+		  	</div>
+		  	<div class="form-group">
+		    	<label for="inputcategory" class="col-sm-3 control-label">Category</label>
+		    	<div class="col-sm-9">
+		    		<select class="multiple" id="optioCategory" name="optioCategory">
+		    			<option value="">Pilih Category</option>
+		    			<?php foreach ($this->db->get('tbl_category')->result() as $row): ?>
+		    				<option value="<?php echo $row->id_category ?>"><?php echo $row->explanation;?></option>
+		    			<?php endforeach; ?>
+		    		</select>
+		    	</div>
+		  	</div>
+		</form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-success" id="btnSimpan">Simpan</button>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
 <!-- END CONTENT -->
-<!-- <script type="text/javascript">
-	var table;
+<script type="text/javascript">
+	$(function() {
 
-	$(document).ready(function(){
-
-		table = $('#data').DataTable({
-			"processing": true;
-			"serverside": true;
-			"order": [],
-			"ajax": {
-				"url": "<?php// echo site_url('admin/tampilProdukDataTables');?>",
-				"type": "POST"
-			},
-			"columnDefs": [{
-				"targets": [0],
-				"orderable": false,
+		$("#data").on('click', '.btn-edit', function() {
+			var id = $(this).attr('data');
+			$("#editProduct").modal('show');
+			$("#editProduct").find('.modal-title').html('Edit Item');
+			$("#myFormEditItem").attr('action','<?php echo site_url('admin/editProduct'); ?>');
+			$.ajax({
+				url: '<?php echo site_url('admin/getItemById'); ?>',
+				method: 'GET',
+				type: 'ajax',
+				dataType: 'json',
+				data: {id: id},
+				success: function(data) {
+					$('input[name=txtId]').val(data.id_item);
+					$('input[name=txtfoto]').val(data.foto);
+					$('input[name=txtNama]').val(data.name_item);
+					$('input[name=txtStock]').val(data.stock);
+					$('input[name=txtprice]').val(data.selling_price);
+					$('select[name=optioCategory]').val(data.id_category);
 				},
-			],
-		})
+				error: function() {
+					alert('Tidak Bisa Edit Data');
+				}
+
+			});
+		});
+
+		$("#data").on('click', '.btn-delete', function(){
+			var status = confirm('Apakah anda yakin akan mengahpus Item ini?');
+			var id = $(this).attr('data');
+
+			if(status) {
+				$.ajax({
+					url: '<?php echo site_url('admin/deleteProduct'); ?>',
+					data: {id: id},
+					dataType: 'json',
+					method: 'post',
+					success: function(response) {
+						if(response.success) {
+							alert('Data Berhasil di Hapus!');
+							location.reload();
+						}
+					},
+					error: function() {
+						alert('Data tidak berhasil dihapus');
+					}
+				});
+			}
+		});
+
+		$("#btnSimpan").click(function() {
+			var url = $("#myFormEditItem").attr('action');
+			var data = $("#myFormEditItem").serialize();
+
+			var name = $('input[name=txtNama]');
+			var stock = $('input[name=txtStock]');
+			var price = $('input[name=txtprice]');
+			var category = $('select[name=optioCategory]');
+			var result = '';
+
+			if(name.val() == "") {
+				name.parents().parents().addClass('has-error');
+			} else {
+				name.parents().parents().removeClass('has-error');
+				result += '1'
+			}
+
+			if(stock.val() == '') {
+				stock.parents().parents().addClass('has-error');
+			} else {
+				stock.parents().parents().removeClass('has-error');
+				result += '2';
+			}
+
+			if(price.val() == '') {
+				stock.parents().parents().addClass('has-error');
+			} else {
+				stock.parents().parents().removeClass('has-error');
+				result += '3';
+			}
+
+			if(category.val() == '') {
+				category.parents().parents().addClass('has-error');
+			} else {
+				category.parents().parents().removeClass('has-error');
+				result += '4';
+			}
+
+			if(result == '1234') {
+				$.ajax({
+					url: url,
+					data: data,
+					method: 'POST',
+					type: 'ajax',
+					dataType: 'json',
+					succes: function(response) {
+						if(response.success) {
+							alert('Data Berhasil di Hapus!');
+							location.reload();
+						}
+					},
+					error: function() {
+						alert('Tidak Bisa di Edit');
+					}
+
+				});
+			}
+
+		});
 
 	});
-</script> -->
+</script>
 <!-- FOOTER -->	
 <?php echo $footer;?>
 <!-- END FOOTER -->

@@ -75,8 +75,7 @@
             </div>
             
         </div>
-
-
+        
 
         <!-- Javascript -->
         <script src="<?php echo base_url();?>assets/login/js/jquery-1.11.1.min.js"></script>
