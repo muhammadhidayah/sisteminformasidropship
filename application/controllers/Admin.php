@@ -7,6 +7,7 @@ class Admin extends CI_Controller {
 		parent::__construct();
 		$this->load->model('Produk_model', 'p_m');
 		$this->load->model('Dropshiper_model','d_m');
+		$this->load->model('Transaksi_model', 't_m');
 
 		if($this->session->userdata('id_level') != 1) {
 			redirect(base_url());
@@ -273,7 +274,54 @@ class Admin extends CI_Controller {
 
 		echo json_encode($msg);
 	}
+
+
+	//Transaksi
+	public function transaksi() {
+		$data['sidemenu'] = $this->load->view('layout/sidemenu',array(),true);
+		$data['header'] = $this->load->view('layout/header',array("username" => $this->session->userdata('username')),true);
+			$data['menu'] = $this->load->view('layout/menu',array("username" => $this->session->userdata('username')),true);
+		$data['footer'] = $this->load->view('layout/footer',array(),true);
+		$this->load->view('admin/transaksi', $data);
+	}
+
+	public function getAllTransaksi() {
+		$result = $this->t_m->getAllTransaksi();
+		$data = array();
+		foreach ($result->result() as $rows) {
+			$row = array();
+			$row['id_purchase'] = $rows->id_purchase;
+			$row['nama_toko'] = $rows->nama_toko;
+			$row['status'] = $rows->status;
+			if($rows->id_status == '002') {
+				$row['option'] = '<center><a href="javascript:;" class="btn btn-warning btn-sm btn-lihat-detail" data="'. $rows->id_purchase.'"><span class="glyphicon glyphicon-eye-open"></span>  Lihat Detail</a>&nbsp&nbsp&nbsp&nbsp <a href="javascript:;" class="btn btn-danger btn-sm btn-confirm" data="'.$rows->id_purchase.'"><span class="glyphicon glyphicon-check"></span> Confirmasi</a></center>';
+			} else {
+				$row['option'] = '<center><a href="javascript:;" class="btn btn-warning btn-sm btn-lihat-detail" data="'. $rows->id_purchase.'"><span class="glyphicon glyphicon-eye"></span>  Lihat Detail</a>&nbsp&nbsp&nbsp&nbsp';
+			}
+			
+
+			$data[] = $row;
+		}
+
+		echo json_encode($data);
+	}
 	
+	function getDetailTransaksi() {
+		$result = $this->t_m->getDetailTransaksi();
+		echo json_encode($result->result());
+	}
+
+	function confirmTransaksi() {
+		$result = $this->t_m->updateStatus();
+		
+		$msg['success'] = false;
+
+		if($result) {
+			$msg['success'] = true;
+		}
+
+		echo json_encode($msg);
+	}
 }
 
 ?>
