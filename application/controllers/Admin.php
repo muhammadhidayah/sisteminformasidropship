@@ -42,7 +42,7 @@ class Admin extends CI_Controller {
 			$row['stock'] = $produk->stock;
 			$row['selling_price'] = 'Rp. '.$produk->selling_price;
 			$row['foto'] = '<center><a href="'.base_url('upload/'.$produk->foto).'" target="_blank"><img src="'.base_url('upload/'.$produk->foto).'" class="img-responsive" width="40" height="50" /></a></center>';
-			$row['option'] = '<center><a href="javascript:;" class="btn btn-warning btn-sm btn-edit" data="'. $produk->id_item.'"><span class="glyphicon glyphicon-pencil"></span>  Edit</a>&nbsp&nbsp&nbsp&nbsp <a href="javascript:;" class="btn btn-danger btn-sm btn-delete" data="'.$produk->id_item.'"><span class="glyphicon glyphicon-trash"></span> Delete foto</a></center>';
+			$row['option'] = '<center><a href="javascript:;" class="btn btn-warning btn-sm btn-edit" data="'. $produk->id_item.'"><span class="glyphicon glyphicon-pencil"></span>  Edit</a>&nbsp&nbsp&nbsp&nbsp <a href="javascript:;" class="btn btn-danger btn-sm btn-delete" data="'.$produk->id_item.'"><span class="glyphicon glyphicon-trash"></span> Delete Item</a></center>';
 
 			$data[] = $row;
 		}

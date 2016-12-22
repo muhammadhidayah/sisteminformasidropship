@@ -7,6 +7,7 @@ class Dropshipper extends CI_Controller {
 		parent::__construct();
 		$this->load->model('Produk_model', 'p_m');
 		$this->load->model('Dropshiper_model','d_m');
+		$this->load->model('Transaksi_model', 't_m');
 		if($this->session->userdata('id_level') != 2) {
 			redirect(site_url());
 		}
@@ -93,6 +94,32 @@ class Dropshipper extends CI_Controller {
 		$data['menu'] = $this->load->view('layout/menu',array("username" => $this->session->userdata('username')),true);
 		$data['footer'] = $this->load->view('layout/footer',array(),true);
 		$this->load->view('dropship/transaksi', $data);
+	}
+
+	public function ShowTransaksi() {
+		$result = $this->t_m->getTransaksiByID();
+		$data = array();
+		foreach ($result->result() as $rows) {
+			$row = array();
+			$row['id_purchase'] = $rows->id_purchase;
+			$row['nama_toko'] = $rows->nama_toko;
+			$row['status'] = $rows->status;
+			if($rows->id_status == '002') {
+				$row['option'] = '<center><a href="javascript:;" class="btn btn-warning btn-sm btn-lihat-detail" data="'. $rows->id_purchase.'"><span class="glyphicon glyphicon-eye-open"></span>  Lihat Detail</a>&nbsp&nbsp&nbsp&nbsp</center>';
+			} else {
+				$row['option'] = '<center><a href="javascript:;" class="btn btn-warning btn-sm btn-lihat-detail" data="'. $rows->id_purchase.'"><span class="glyphicon glyphicon-eye"></span>  Lihat Detail</a>&nbsp&nbsp&nbsp&nbsp';
+			}
+			
+
+			$data[] = $row;
+		}
+
+		echo json_encode($data);
+	}
+
+	function getDetailTransaksi() {
+		$result = $this->t_m->getDetailTransaksi();
+		echo json_encode($result->result());
 	}
 
 }

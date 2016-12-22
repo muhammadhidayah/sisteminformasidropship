@@ -37,6 +37,18 @@ class Transaksi_model extends CI_Model {
 			return false;
 	}
 
+	public function getTransaksiByID() {
+		$id_user = $this->session->userdata('id_user');
+		$this->db->select('p.id_purchase, d.nama_toko, status, p.id_status');
+		$this->db->from('tbl_purchase p');
+		$this->db->join('tbl_user u', 'p.id_user = u.id_user');
+		$this->db->join('tbl_dropship d', 'u.id_user = d.id_user');
+		$this->db->join('tbl_purchase_status s', 's.id_status = p.id_status');
+		$this->db->where('p.id_user',$id_user);
+		return $this->db->get();
+		return $query;
+	}
+
 }
 
 /* End of file Transaksi_model.php */
