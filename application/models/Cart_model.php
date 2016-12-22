@@ -9,7 +9,7 @@ class Cart_model extends CI_Model {
 		$id_inv = $this->db->select('fnCreateIdPurchase() as Id')->get()->row()->Id;
 		$data_pur = array(
 				'id_purchase' 	=> 	$id_inv,
-				'id_dropship'	=>	$this->session->userdata('id_user'),
+				'id_user'		=>	$this->session->userdata('id_user'),
 				'id_status'		=> '002',
 				'date'			=>	date("Y-m-d H:i:s"),
 				'alamat'		=> 	$alamat

@@ -215,35 +215,37 @@
 		});
 
 		function tampiluser(){
-			$.ajax({
-				type: 'ajax',
-				url: '<?php echo site_url();?>/admin/tampiluser',
-				type: 'POST',
-				dataType: 'json',
-				async: false,
-				success: function(data){
-					var hasil = '';
-					var i;
-					for(i = 0; i < data.length; i++ ) {
-						hasil += '<tr>' +
-									'<td><center>'+data[i].jenis_user+'</center></td>'+
-									'<td><center>'+data[i].username+'</center></td>'+
-									'<td><center>'+data[i].password+'</center></td>'+
-									'<td><center>'+data[i].last_login+'</center></td>'+
-									'<td><center>'+
-										'<a href="javascript:;" class="btn btn-success btn-sm item-edit" data="'+data[i].id_user+'"><span class="glyphicon glyphicon-pencil"></span>&nbsp&nbspEdit</a>&nbsp&nbsp&nbsp&nbsp'+
-										'<a href="javascript:;" class="btn btn-danger btn-sm item-hapus" data="'+data[i].id_user+'"><span class="glyphicon glyphicon-trash"></span>&nbsp&nbspHapus</a>&nbsp&nbsp&nbsp&nbsp' +
-										'<a href="javascript:;" class="btn btn-info" id="detail-dropship">Lihat detail Dropshiper</a>'
-									'</center></td>'+
-								'</tr>';	
-
-					}
-					$('#showdata').html(hasil);
-				},
-				error: function(){
-					alert('Tidak Bisa Mengambil Data');
-				}
-		});
+		    $.ajax({
+		        type: 'ajax',
+		        url: '<?php echo site_url();?>/admin/tampiluser',
+		        type: 'POST',
+		        dataType: 'json',
+		        async: false,
+		        success: function(data){
+		            var hasil = '';
+		            var i;
+		            for(i = 0; i < data.length; i++ ) {
+		                hasil += '<tr>' +
+		                            '<td><center>'+data[i].jenis_user+'</center></td>'+
+		                            '<td><center>'+data[i].username+'</center></td>'+
+		                            '<td><center>'+data[i].password+'</center></td>'+
+		                            '<td><center>'+data[i].last_login+'</center></td>'+
+		                            '<td><center>'+
+		                            '<a href="javascript:;" class="btn btn-success btn-sm item-edit" data="'+data[i].id_user+'"><span class="glyphicon glyphicon-pencil"></span>&nbsp&nbspEdit</a>&nbsp&nbsp&nbsp&nbsp'+
+		                            '<a href="javascript:;" class="btn btn-danger btn-sm item-hapus" data="'+data[i].id_user+'"><span class="glyphicon glyphicon-trash"></span>&nbsp&nbspHapus</a>&nbsp&nbsp&nbsp&nbsp' ;
+						if(data[i].jenis_user == 'user' ) {
+		                    hasil += '<a href="javascript:;" class="btn btn-info" id="detail-dropship">Lihat detail Dropshiper</a>';
+						}
+						
+		                hasil += '</center></td>'+'</tr>';   
+		 
+		            }
+		            $('#showdata').html(hasil);
+		        },
+		        error: function(){
+		            alert('Tidak Bisa Mengambil Data');
+		        }
+			});
 		}
 		
 	});

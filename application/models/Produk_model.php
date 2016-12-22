@@ -71,6 +71,7 @@ class Produk_model extends CI_Model {
 		} else
 			return false;
 	}
+
 	public function deleteItem() {
 		$id = $this->input->post('id');
 		$this->db->where('id_item', $id);
@@ -80,6 +81,25 @@ class Produk_model extends CI_Model {
 			return true;
 		} else
 			return false;
+	}
+
+	public function addItem($img) {
+		$data = array(
+				'id_item'		=>	$this->input->post('txtId'),
+				'id_category'	=>	$this->input->post('optioCategory'),
+				'name_item' 	=>	$this->input->post('txtNama'),
+				'stock'			=>	$this->input->post('txtStock'),
+				'selling_price' =>	$this->input->post('txtprice'),
+				'foto' 			=>	$img
+			);
+
+		$this->db->insert('tbl_item', $data);
+
+		if($this->db->affected_rows() > 0) {
+			return true;
+		} else
+			return false;
+
 	}
 
 	/* Untuk Datatables Server side, silahkan kalau kalian ingin menggunakan datatables. silahkan cari digoogle tutorial selanjutnya. Codingnya udah tak buatin

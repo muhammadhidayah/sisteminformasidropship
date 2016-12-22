@@ -85,7 +85,7 @@
 				<div class="panel panel-default">
 					<div class="panel-heading">Daftar Produk</div>
 					<div class="panel-body">
-						<button class="btn btn-success btn-sm" id="btnTambahProduk"><span class="glyphicon glyphicon-plus"></span> Tambah Product</button>
+						<a href="<?php echo site_url('admin/addProduct') ?>" class="btn btn-success btn-sm" id="btnTambahProduk"><span class="glyphicon glyphicon-plus"></span> Tambah Product</button></a>
 						<table data-toggle="table" id="data" data-url="<?php echo site_url('admin/tampilProdukDataTables');?>" data-show-refresh="true" data-show-toggle="false" data-show-columns="true" data-search="false" data-select-item-name="toolbar1" data-pagination="true" data-sort-name="name" data-sort-order="desc">
 						    <thead>
 						    <tr>
@@ -155,67 +155,6 @@
   </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
 
-<!--Modal Untuk Tambah Produk-->
-<div class="modal fade" tabindex="-1" role="dialog" id="addProduct">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title">Modal title</h4>
-      </div>
-      <div class="modal-body">
-        <form class="form-horizontal" action="" method="POST" id="myFormEditItem">
-			<div class="form-group">
-		    	<label for="inputnama" class="col-sm-3 control-label">ID Item</label>
-		    	<div class="col-sm-9">
-		    		<input type="text" class="form-control" id="txtId" name="txtId">
-		    	</div>
-		  	</div>
-			<div class="form-group">
-		    	<label for="inputnama" class="col-sm-3 control-label">Nama Item</label>
-		    	<div class="col-sm-9">
-		    		<input type="text" class="form-control" id="txtNama" name="txtNama">
-		    	</div>
-		  	</div>
-		  	<div class="form-group">
-		    	<label for="inputnama" class="col-sm-3 control-label">Stock Item</label>
-		    	<div class="col-sm-9">
-		    		<input type="text" class="form-control" id="txtStock" name="txtStock">
-		    	</div>
-		  	</div>
-		  	<div class="form-group">
-		    	<label for="inputnama" class="col-sm-3 control-label">Harga Item</label>
-		    	<div class="col-sm-9">
-		    		<input type="text" class="form-control" id="txtprice" name="txtprice">
-		    	</div>
-		  	</div>
-		  	<div class="form-group">
-		    	<label for="inputcategory" class="col-sm-3 control-label">Category</label>
-		    	<div class="col-sm-9">
-		    		<select class="multiple" id="optioCategory" name="optioCategory">
-		    			<option value="">Pilih Category</option>
-		    			<?php foreach ($this->db->get('tbl_category')->result() as $row): ?>
-		    				<option value="<?php echo $row->id_category ?>"><?php echo $row->explanation;?></option>
-		    			<?php endforeach; ?>
-		    		</select>
-		    	</div>
-		  	</div>
-		  	<div class="form-group">
-		    	<label for="inputnama" class="col-sm-3 control-label">Foto</label>
-		    	<div class="col-sm-9">
-		    		<input type="file" id="inputPhoto" name="inputPhoto">
-		    	</div>
-		  	</div>
-		</form>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-success" id="btnAddSimpan">Simpan</button>
-      </div>
-    </div><!-- /.modal-content -->
-  </div><!-- /.modal-dialog -->
-</div><!-- /.modal -->
-
 <!-- END CONTENT -->
 <script type="text/javascript">
 	$(function() {
@@ -223,18 +162,18 @@
 		$('#btnTambahProduk').click(function(){
 			$('#addProduct').modal('show');
 			$('#addProduct').find('.modal-title').html('Tambah Produk');
-			$('#addProduct').attr('action','<?php echo site_url('admin/addProduct') ?>');
+			$('#myFormAddItem').attr('action','<?php echo site_url('admin/addProduct') ?>');
 		});
 
-		$('#btnAddSimpan').click(function(){
-			var url = $('#addProduct').attr('action');
-			var data = $('#addProduct').serialize();
+		/*$('#btnAddSimpan').click(function(){
+			var url = $('#myFormAddItem').attr('action');
+			var data = $('#myFormAddItem').serialize();
 
-			var id = $('input[name=txtId]');
-			var name = $('input[name=txtNama]');
-			var stock = $('input[name=txtStock]');
-			var price = $('input[name=txtprice]');
-			var category = $('select[name=optioCategory]');
+			var id = $('input[name=txtIdItem]');
+			var name = $('input[name=txtNamaItem]');
+			var stock = $('input[name=txtStockItem]');
+			var price = $('input[name=txtpriceitem]');
+			var category = $('select[name=optioCategoryitem]');
 			var foto = $('input[name=inputPhoto]');
 			var result = '';
 
@@ -262,7 +201,7 @@
 			if(price.val() == '') {
 				stock.parents().parents().addClass('has-error');
 			} else {
-				stock.parents().parents().removeClass('has-error');
+				price.parents().parents().removeClass('has-error');
 				result += '3';
 			}
 
@@ -280,24 +219,26 @@
 				result += '5';
 			}
 
-			if(result == '112345') {
+			if(result == '11234') {
 				$.ajax({
 					url: url,
-					data: data,
-					dataType: 'json',
-					method: 'POST',
 					type: 'ajax',
-					success: function() {
-
+					method: 'POST',
+					dataType: 'json',
+					data: data,
+					success: function(response) {
+						if(response.succes) {
+							alert('Berhasil ditambahkan');
+						}
 					},
 					error: function() {
-						alert('Gagal Menambahkan Product');
+						alert('Gagal Menambahkan Item');
 					}
 				});
 			}
 
 
-		});
+		});*/
 
 		$("#data").on('click', '.btn-edit', function() {
 			var id = $(this).attr('data');
@@ -349,8 +290,8 @@
 		});
 
 		$("#btnSimpan").click(function() {
-			var url = $("#myFormEditItem").attr('action');
-			var data = $("#myFormEditItem").serialize();
+			var url = $('#myFormEditItem').attr('action');
+			var data = $('#myFormEditItem').serialize();
 
 			var name = $('input[name=txtNama]');
 			var stock = $('input[name=txtStock]');
