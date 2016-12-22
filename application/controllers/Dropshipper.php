@@ -86,6 +86,15 @@ class Dropshipper extends CI_Controller {
 		print_r($this->cart->contents());
 	}
 
+	function transaksi() {
+		
+		$data['sidemenu'] = $this->load->view('layout/sidemenu',array(),true);
+		$data['header'] = $this->load->view('layout/header',array("username" => $this->session->userdata('username')),true);
+		$data['menu'] = $this->load->view('layout/menu',array("username" => $this->session->userdata('username')),true);
+		$data['footer'] = $this->load->view('layout/footer',array(),true);
+		$this->load->view('dropship/transaksi', $data);
+	}
+
 }
 
 ?>
